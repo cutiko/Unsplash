@@ -1,5 +1,6 @@
 package cl.cutiko.data.models
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -12,7 +13,5 @@ data class Unsplash(
     var downloads: Int = 0,
     var likes: Int = 0,
     var views: Int = 0,
-    var links: UnsplashLinks?,
-    var user: UnsplashUser?,
-    var exif: UnsplashExif?
+    @Embedded var links: UnsplashLinks?
 )
