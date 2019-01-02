@@ -1,4 +1,4 @@
-package cl.cutiko.domain
+package cl.cutiko.domain.network
 
 import android.app.Application
 import cl.cutiko.data.models.Unsplash

@@ -1,4 +1,4 @@
-package cl.cutiko.domain;
+package cl.cutiko.domain.network;
 
 import cl.cutiko.data.models.Unsplash;
 import retrofit2.Call;

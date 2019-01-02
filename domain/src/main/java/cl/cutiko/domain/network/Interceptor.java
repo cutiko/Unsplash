@@ -1,4 +1,4 @@
-package cl.cutiko.domain;
+package cl.cutiko.domain.network;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
