@@ -10,7 +10,7 @@ import cl.cutiko.data.models.Unsplash
 @Dao
 interface UnsplashDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUnsplashes(unsplashes : List<Unsplash>)
+    fun insertUnsplashes(unsplashes : List<Unsplash>?)
 
     @Query("SELECT * FROM unsplashes")
     fun loadAllUnsplashes() : List<Unsplash>
