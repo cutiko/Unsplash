@@ -9,7 +9,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class GetUnspl(application: Application) : Callback<List<Unsplash>> {
+class GetUnsplashes(application: Application) : Callback<List<Unsplash>> {
 
     private val repo : UnsplashRepository= UnsplashRepository(application)
 
