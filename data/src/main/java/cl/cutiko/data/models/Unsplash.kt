@@ -4,14 +4,13 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "unsplashes")
 data class Unsplash(
     @PrimaryKey var id: String,
-    var urls: UnsplashUrls?,
+    @Embedded var urls: UnsplashUrls?,
     var color: String?,
     var description: String?,
     var downloads: Int = 0,
     var likes: Int = 0,
-    var views: Int = 0,
-    @Embedded var links: UnsplashLinks?
+    var views: Int = 0
 )
