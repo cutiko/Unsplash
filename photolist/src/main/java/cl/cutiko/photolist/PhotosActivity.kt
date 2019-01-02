@@ -7,20 +7,25 @@ import androidx.lifecycle.Observer
 import cl.cutiko.data.models.Unsplash
 import cl.cutiko.data.repository.UnsplashRepository
 import kotlinx.android.synthetic.main.activity_photos.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
-class PhotosActivity : AppCompatActivity(), Observer<Unsplash>, UnsplashRepository.Callback {
+class PhotosActivity : AppCompatActivity(), Observer<Unsplash> {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photos)
 
         val repository = UnsplashRepository(application)
-        repository.getAllUnsplash(this)
+
+        GlobalScope.launch { repository.loadAll().map { Log.d("UNSPLASH_DB", it.id) } }
 
         repository.getLast(this, this)
 
         testBtn.setOnClickListener {
-            repository.insert(unsplash())
+            GlobalScope.launch {
+                repository.insert(unsplash())
+            }
         }
     }
 
@@ -30,10 +35,4 @@ class PhotosActivity : AppCompatActivity(), Observer<Unsplash>, UnsplashReposito
 
     fun unsplash() = Unsplash("${System.currentTimeMillis()}", null, null, null, 0, 0, 0)
 
-    override fun all(list: MutableList<Unsplash>?) {
-        Log.d("UNSPLASH_DB", "${list?.size}")
-        list?.map {
-            Log.d("UNSPLASH_DB", it.id)
-        }
-    }
 }
