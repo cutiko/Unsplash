@@ -1,5 +1,6 @@
 package cl.cutiko.data.daos
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -13,4 +14,7 @@ interface UnsplashDao {
 
     @Query("SELECT * FROM unsplashes")
     fun loadAllUnsplashes() : List<Unsplash>
+
+    @Query("SELECT * FROM unsplashes ORDER BY ID DESC LIMIT 1")
+    fun loadLast() : LiveData<Unsplash>
 }

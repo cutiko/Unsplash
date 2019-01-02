@@ -2,13 +2,15 @@ package cl.cutiko.data.repository;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import cl.cutiko.data.daos.UnsplashDao;
 import cl.cutiko.data.database.UnsplashRoomDatabase;
 import cl.cutiko.data.models.Unsplash;
 
 import java.util.List;
-import java.util.concurrent.Executor;
 
+//TODO move this to Kotlin
 public class UnsplashRepository {
 
     private UnsplashDao unsplashDao;
@@ -23,7 +25,11 @@ public class UnsplashRepository {
     }
 
     public void getAllUnsplash(Callback callback) {
-        new UnsplasLoader(unsplashDao, callback).execute();
+        new UnsplashLoader(unsplashDao, callback).execute();
+    }
+
+    public void getLast(LifecycleOwner owner, Observer<Unsplash> observer) {
+        unsplashDao.loadLast().observe(owner, observer);
     }
 
     private static class UnsplashInsertion extends AsyncTask<Unsplash, Void, Boolean> {
@@ -42,11 +48,11 @@ public class UnsplashRepository {
         }
     }
 
-    private static class UnsplasLoader extends AsyncTask<Void, Void, List<Unsplash>> {
+    private static class UnsplashLoader extends AsyncTask<Void, Void, List<Unsplash>> {
         private final UnsplashDao dao;
         private final Callback callback;
 
-        public UnsplasLoader(UnsplashDao dao, Callback callback) {
+        public UnsplashLoader(UnsplashDao dao, Callback callback) {
             this.dao = dao;
             this.callback = callback;
         }
