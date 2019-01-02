@@ -18,7 +18,7 @@ class UnsplashRepository(application: Application) {
         unsplashDao = db.unsplashDao
     }
 
-    suspend fun insert(unsplash : Unsplash ) = coroutineScope{ unsplashDao.insertUnsplash(unsplash) }
+    suspend fun insert(unsplashes : List<Unsplash> ) = coroutineScope{ unsplashDao.insertUnsplashes(unsplashes) }
 
 
     @UiThread

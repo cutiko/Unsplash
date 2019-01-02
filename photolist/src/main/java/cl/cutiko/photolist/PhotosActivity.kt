@@ -21,12 +21,6 @@ class PhotosActivity : AppCompatActivity(), Observer<Unsplash> {
         GlobalScope.launch { repository.loadAll().map { Log.d("UNSPLASH_DB", it.id) } }
 
         repository.getLast(this, this)
-
-        testBtn.setOnClickListener {
-            GlobalScope.launch {
-                repository.insert(unsplash())
-            }
-        }
     }
 
     override fun onChanged(unsplash: Unsplash?) {
