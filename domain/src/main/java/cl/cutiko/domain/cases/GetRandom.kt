@@ -8,7 +8,7 @@ class GetRandom(application: Application) : BaseUseCase {
     private val request : GetUnsplashes = GetUnsplashes(application)
 
     override fun start() {
-        request.start()
+        //request.start()
     }
 
 }
