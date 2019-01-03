@@ -1,34 +1,34 @@
 package cl.cutiko.photolist
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import cl.cutiko.data.models.Unsplash
+import cl.cutiko.photolist.adapters.UnsplashesAdapter
 import kotlinx.android.synthetic.main.activity_photos.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class PhotosActivity : AppCompatActivity(), PhotosContract.Callback {
 
-
-    lateinit var photosPresenter : PhotosPresenter
+    private lateinit var photosPresenter : PhotosPresenter
+    private val adapter = UnsplashesAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photos)
+        unsplashRv.layoutManager = LinearLayoutManager(this)
+        unsplashRv.setHasFixedSize(true)
+        unsplashRv.adapter = adapter
 
         photosPresenter = PhotosPresenter(application, this, this)
         GlobalScope.launch { photosPresenter.initialLoad() }
 
-
-        testBtn.setOnClickListener { GlobalScope.launch { photosPresenter.getRandom() } }
     }
 
 
     override fun unsplashesLoaded(unsplashes: List<Unsplash>?) {
-        unsplashes?.map {
-            Log.d("UNSPLASH_DB", it.id)
-        }
+        adapter.update(unsplashes)
     }
 
 

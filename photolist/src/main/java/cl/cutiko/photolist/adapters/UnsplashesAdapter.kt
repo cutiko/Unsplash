@@ -11,7 +11,7 @@ import com.squareup.picasso.Picasso
 
 class UnsplashesAdapter : RecyclerView.Adapter<UnsplashesAdapter.UnsplashHolder>() {
 
-    private val unsplashes : List<Unsplash> = ArrayList()
+    private val unsplashes : MutableList<Unsplash> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UnsplashHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -26,6 +26,11 @@ class UnsplashesAdapter : RecyclerView.Adapter<UnsplashesAdapter.UnsplashHolder>
     }
 
     override fun getItemCount(): Int = unsplashes.size
+
+    fun update(unsplashes : List<Unsplash>?) {
+        if (unsplashes == null) return
+        this.unsplashes.addAll(unsplashes.asIterable())
+    }
 
     class UnsplashHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView : ImageView = itemView as ImageView
