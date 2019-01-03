@@ -17,6 +17,7 @@ class PhotosPresenter(
     private val getLast : GetLast
     private val getRandom : GetRandom
     private val getPrevious : GetPrevious
+    private var randomCalled = false
 
     init {
         getLast = GetLast(lifecycleOwner, this, application)
@@ -36,10 +37,14 @@ class PhotosPresenter(
     }
 
     override suspend fun getRandom() {
-        //getRandom.start()
+        if (!randomCalled) {
+            randomCalled = true
+            getRandom.start()
+        }
     }
 
     override fun onChanged(unsplashes: List<Unsplash>?) {
+        randomCalled = false
         callback.unsplashesLoaded(unsplashes)
     }
 
