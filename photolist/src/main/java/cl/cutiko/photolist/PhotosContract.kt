@@ -5,16 +5,12 @@ import cl.cutiko.data.models.Unsplash
 interface PhotosContract {
 
     interface Callback {
-        suspend fun initialRequest()
-        fun unsplashesLoaded(unsplashes : List<Unsplash>)
-        fun unsplashLoaded(unsplash: Unsplash)
-        suspend fun recyclerRequest()
+        fun unsplashesLoaded(unsplashes : List<Unsplash>?)
     }
 
     interface Presenter {
-        fun startListener()
         suspend fun getRandom()
-        suspend fun loadPrevious()
+        suspend fun initialLoad()
     }
 
 }

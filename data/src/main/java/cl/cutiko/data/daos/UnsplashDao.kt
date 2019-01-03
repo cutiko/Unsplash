@@ -12,9 +12,9 @@ interface UnsplashDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUnsplashes(unsplashes : List<Unsplash>?)
 
-    @Query("SELECT * FROM unsplashes")
-    fun loadAllUnsplashes() : List<Unsplash>
+    @Query("SELECT * FROM unsplashes ORDER BY ID DESC LIMIT 10")
+    fun loadLast() : LiveData<List<Unsplash>>
 
-    @Query("SELECT * FROM unsplashes ORDER BY ID DESC LIMIT 1")
-    fun loadLast() : LiveData<Unsplash>
+    @Query("SELECT * FROM unsplashes")
+    fun loadAll() : List<Unsplash>
 }

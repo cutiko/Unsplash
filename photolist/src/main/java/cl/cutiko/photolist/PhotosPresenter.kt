@@ -7,46 +7,40 @@ import cl.cutiko.data.models.Unsplash
 import cl.cutiko.domain.cases.GetLast
 import cl.cutiko.domain.cases.GetPrevious
 import cl.cutiko.domain.cases.GetRandom
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.*
 
 class PhotosPresenter(
     application: Application,
     lifecycleOwner: LifecycleOwner,
-    private val callback : PhotosContract.Callback) : PhotosContract.Presenter, Observer<Unsplash> {
+    private val callback : PhotosContract.Callback) : PhotosContract.Presenter, Observer<List<Unsplash>> {
 
     private val getLast : GetLast
-    private val getPrevious : GetPrevious
     private val getRandom : GetRandom
+    private val getPrevious : GetPrevious
 
     init {
         getLast = GetLast(lifecycleOwner, this, application)
-        getPrevious = GetPrevious(application)
         getRandom = GetRandom(application)
+        getPrevious = GetPrevious(application)
+    }
+
+    override suspend fun initialLoad() {
+        val unsplashes = coroutineScope { getPrevious.getFromDb() }
+        onChanged(unsplashes)
+        getRandom()
+        GlobalScope.launch {
+            withContext(Dispatchers.Main) {
+                getLast.start()
+            }
+        }
     }
 
     override suspend fun getRandom() {
         getRandom.start()
     }
 
-
-    override suspend fun loadPrevious() {
-        val unsplashes = coroutineScope { getPrevious.getFromDb() }
-        if (unsplashes.isNotEmpty()) {
-            callback.unsplashesLoaded(unsplashes)
-        } else {
-            getRandom()
-        }
+    override fun onChanged(unsplashes: List<Unsplash>?) {
+        callback.unsplashesLoaded(unsplashes)
     }
-
-    override fun onChanged(unsplash: Unsplash) {
-
-    }
-
-    override fun startListener() {
-        getLast.start()
-    }
-
-
-
 
 }

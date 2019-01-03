@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.annotation.UiThread
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Observer
 import cl.cutiko.data.daos.UnsplashDao
 import cl.cutiko.data.database.UnsplashRoomDatabase
@@ -23,14 +24,14 @@ class UnsplashRepository(application: Application) {
 
 
     @UiThread
-    suspend fun loadAll() : List<Unsplash> = coroutineScope{unsplashDao.loadAllUnsplashes()}
-
-    @UiThread
-    fun getLast(lifecycleOwner: LifecycleOwner, observer: Observer<Unsplash>) {
-        val liveData : LiveData<Unsplash> = unsplashDao.loadLast()
+    fun getLast(lifecycleOwner: LifecycleOwner, observer: Observer<List<Unsplash>>) {
+        val liveData : LiveData<List<Unsplash>> = unsplashDao.loadLast()
         if (liveData.hasActiveObservers()) return
         liveData.observe(lifecycleOwner, observer)
     }
+
+    @UiThread
+    suspend fun loadAll() : List<Unsplash> = coroutineScope{unsplashDao.loadAll()}
 
 
 }

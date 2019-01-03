@@ -10,36 +10,27 @@ import kotlinx.coroutines.launch
 
 class PhotosActivity : AppCompatActivity(), PhotosContract.Callback {
 
+
     lateinit var photosPresenter : PhotosPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photos)
+
         photosPresenter = PhotosPresenter(application, this, this)
-        photosPresenter.startListener()
-        GlobalScope.launch { initialRequest() }
+        GlobalScope.launch { photosPresenter.initialLoad() }
+
+
         testBtn.setOnClickListener { GlobalScope.launch { photosPresenter.getRandom() } }
     }
 
-    override fun unsplashesLoaded(unsplashes: List<Unsplash>) {
-        unsplashes.map {
+
+    override fun unsplashesLoaded(unsplashes: List<Unsplash>?) {
+        unsplashes?.map {
             Log.d("UNSPLASH_DB", it.id)
         }
     }
 
-
-    override suspend fun recyclerRequest() {
-        photosPresenter.getRandom()
-    }
-
-
-    override suspend fun initialRequest() {
-        photosPresenter.loadPrevious()
-    }
-
-    override fun unsplashLoaded(unsplash: Unsplash) {
-        Log.d("UNSPLASH_DB", "single: ${unsplash.id}")
-    }
 
 
 }
