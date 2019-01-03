@@ -36,6 +36,7 @@ class UnsplashesAdapter : RecyclerView.Adapter<UnsplashesAdapter.UnsplashHolder>
                 control.add(id)
             }
         }
+        notifyDataSetChanged()
     }
 
     class UnsplashHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
