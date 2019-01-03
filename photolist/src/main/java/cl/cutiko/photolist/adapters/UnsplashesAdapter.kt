@@ -1,5 +1,6 @@
 package cl.cutiko.photolist.adapters
 
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
@@ -44,7 +45,7 @@ class UnsplashesAdapter : RecyclerView.Adapter<UnsplashesAdapter.UnsplashHolder>
                     val palette = Palette.from(bitmap).generate()
                     val black = ContextCompat.getColor(context, android.R.color.black)
                     val overlayColor = palette.getDarkMutedColor(black)
-                    holder.overlay.setBackgroundColor(overlayColor)
+                    holder.overlay.backgroundTintList = ColorStateList.valueOf(overlayColor)
                     val foregroundColor = palette.getDarkVibrantColor(black)
                     holder.foreground.setBackgroundColor(foregroundColor)
                 }
