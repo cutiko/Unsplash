@@ -11,13 +11,9 @@ import java.util.concurrent.TimeUnit;
 
 class Interceptor {
 
-    private static final Interceptor ourInstance = new Interceptor();
     private static final String BASE_URL = "https://api.unsplash.com/";
     private static Requests requests;
 
-    static Interceptor getInstance() {
-        return ourInstance;
-    }
 
     private Interceptor() {
     }
