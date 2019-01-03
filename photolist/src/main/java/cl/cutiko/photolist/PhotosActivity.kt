@@ -1,7 +1,6 @@
 package cl.cutiko.photolist
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,19 +33,15 @@ class PhotosActivity : AppCompatActivity(), PhotosContract.Callback {
     private fun setScrollListener(recycler : RecyclerView, layoutManager: LinearLayoutManager) {
         recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                Log.d("SCROLLING_LISTENER", "")
                 if (adapter.itemCount - layoutManager.findLastCompletelyVisibleItemPosition() <= 2) {
                     GlobalScope.launch { presenter.getRandom() }
-                    Log.d("SCROLLING_LISTENER", "CONDITION")
                 }
             }
         })
     }
 
     override fun unsplashesLoaded(unsplashes: List<Unsplash>?) {
-        Log.d("SCROLLING_LISTENER", "NEW DATA")
         GlobalScope.launch { withContext(Dispatchers.Main) {
-            Log.d("SCROLLING_LISTENER", "INSIDE COROUTINE")
             adapter.update(unsplashes)
         } }
     }
