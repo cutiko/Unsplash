@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface Requests {
 
-    @GET("photos/random?orientation=portrait&count=10")
+    @GET("photos/random?orientation=landscape&count=10")
     Call<List<Unsplash>> getRandom();
 
 }
