@@ -10,23 +10,34 @@ import kotlinx.android.synthetic.main.activity_photos.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class PhotosActivity : AppCompatActivity(), Observer<Unsplash> {
+class PhotosActivity : AppCompatActivity(), PhotosContract.Callback {
+
+    lateinit var photosPresenter : PhotosPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photos)
-
-        val repository = UnsplashRepository(application)
-
-        GlobalScope.launch { repository.loadAll().map { Log.d("UNSPLASH_DB", it.id) } }
-
-        repository.getLast(this, this)
+        photosPresenter = PhotosPresenter(application, this, this)
+        photosPresenter.startListener()
+        GlobalScope.launch { initialRequest() }
+        testBtn.setOnClickListener { GlobalScope.launch { photosPresenter.getRandom() } }
     }
 
-    override fun onChanged(unsplash: Unsplash?) {
-        Log.d("UNSPLASH_DB", "last ${unsplash?.id}")
+    override fun unsplashesLoaded(unsplashes: List<Unsplash>) {
+        unsplashes.map {
+            Log.d("UNSPLASH_DB", it.id)
+        }
     }
 
-    fun unsplash() = Unsplash("${System.currentTimeMillis()}", null, null, null, 0, 0, 0)
+
+    override suspend fun recylerRequest() {
+        photosPresenter.getRandom()
+    }
+
+
+    override suspend fun initialRequest() {
+        photosPresenter.checkStatus()
+    }
+
 
 }

@@ -3,6 +3,7 @@ package cl.cutiko.data.repository
 import android.app.Application
 import androidx.annotation.UiThread
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import cl.cutiko.data.daos.UnsplashDao
 import cl.cutiko.data.database.UnsplashRoomDatabase
@@ -24,8 +25,11 @@ class UnsplashRepository(application: Application) {
     @UiThread
     suspend fun loadAll() : List<Unsplash> = coroutineScope{unsplashDao.loadAllUnsplashes()}
 
-    fun getLast(lifecycleOwner: LifecycleOwner, observer: Observer<Unsplash>) {
-        unsplashDao.loadLast().observe(lifecycleOwner, observer)
+    @UiThread
+    fun getLast(lifecycleOwner: LifecycleOwner, observer: Observer<List<Unsplash>>) {
+        val liveData : LiveData<List<Unsplash>> = unsplashDao.loadLast()
+        if (liveData.hasActiveObservers()) return
+        liveData.observe(lifecycleOwner, observer)
     }
 
 

@@ -8,7 +8,7 @@ import cl.cutiko.data.repository.UnsplashRepository
 
 class GetLast(
     private val lifecycleOwner: LifecycleOwner,
-    private val observer: Observer<Unsplash>,
+    private val observer: Observer<List<Unsplash>>,
     application: Application
 ) : BaseUseCase {
 
