@@ -16,11 +16,12 @@ import kotlinx.coroutines.withContext
 class PhotosActivity : AppCompatActivity(), PhotosContract.Callback {
 
     private lateinit var presenter : PhotosPresenter
-    private val adapter = UnsplashesAdapter()
+    private lateinit var adapter : UnsplashesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photos)
+        adapter = UnsplashesAdapter(this)
         val layoutManager = LinearLayoutManager(this)
         unsplashRv.layoutManager = layoutManager
         unsplashRv.setHasFixedSize(true)

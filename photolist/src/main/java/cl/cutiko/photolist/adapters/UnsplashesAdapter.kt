@@ -1,5 +1,6 @@
 package cl.cutiko.photolist.adapters
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -16,10 +17,12 @@ import cl.cutiko.photolist.R
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 
-class UnsplashesAdapter : RecyclerView.Adapter<UnsplashesAdapter.UnsplashHolder>() {
+class UnsplashesAdapter(context : Context) : RecyclerView.Adapter<UnsplashesAdapter.UnsplashHolder>() {
 
     private val unsplashes : MutableList<Unsplash> = mutableListOf()
     private val control : MutableSet<String> = mutableSetOf()
+    private val black : Int = ContextCompat.getColor(context, android.R.color.black)
+    private val white : Int = ContextCompat.getColor(context, android.R.color.white)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UnsplashHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -29,7 +32,6 @@ class UnsplashesAdapter : RecyclerView.Adapter<UnsplashesAdapter.UnsplashHolder>
 
     override fun onBindViewHolder(holder: UnsplashHolder, position: Int) {
         val unsplash = unsplashes[position]
-        val context = holder.itemView.context
         val url = unsplash.urls?.small
         val imageView = holder.imageView
 
@@ -43,12 +45,10 @@ class UnsplashesAdapter : RecyclerView.Adapter<UnsplashesAdapter.UnsplashHolder>
                 imageView.setImageBitmap(bitmap)
                 if (bitmap != null) {
                     val palette = Palette.from(bitmap).generate()
-                    val black = ContextCompat.getColor(context, android.R.color.black)
                     val overlayColor = palette.getDarkMutedColor(black)
                     holder.overlay.backgroundTintList = ColorStateList.valueOf(overlayColor)
                     val foregroundColor = palette.getDarkVibrantColor(black)
                     holder.foreground.backgroundTintList = ColorStateList.valueOf(foregroundColor)
-                    val white = ContextCompat.getColor(context, android.R.color.white)
                     holder.name.setTextColor(palette.getLightMutedColor(white))
                     holder.likes.setTextColor(palette.getLightVibrantColor(white))
                 }
