@@ -20,7 +20,9 @@ class GetUnsplashes(application: Application) : Callback<List<Unsplash>> {
     }
 
     override fun onResponse(call: Call<List<Unsplash>>, response: Response<List<Unsplash>>) {
-        GlobalScope.launch { repo.insert(response.body()) }
+        if (response.isSuccessful && response.code() == 200 && response.body() != null) {
+            GlobalScope.launch { repo.insert(response.body()) }
+        }
     }
 
     override fun onFailure(call: Call<List<Unsplash>>, t: Throwable) {}
