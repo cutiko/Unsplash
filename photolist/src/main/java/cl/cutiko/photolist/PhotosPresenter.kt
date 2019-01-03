@@ -12,7 +12,7 @@ import kotlinx.coroutines.coroutineScope
 class PhotosPresenter(
     application: Application,
     lifecycleOwner: LifecycleOwner,
-    private val callback : PhotosContract.Callback) : PhotosContract.Presenter, Observer<List<Unsplash>> {
+    private val callback : PhotosContract.Callback) : PhotosContract.Presenter, Observer<Unsplash> {
 
     private val getLast : GetLast
     private val getPrevious : GetPrevious
@@ -29,7 +29,7 @@ class PhotosPresenter(
     }
 
 
-    override suspend fun checkStatus() {
+    override suspend fun loadPrevious() {
         val unsplashes = coroutineScope { getPrevious.getFromDb() }
         if (unsplashes.isNotEmpty()) {
             callback.unsplashesLoaded(unsplashes)
@@ -38,8 +38,8 @@ class PhotosPresenter(
         }
     }
 
-    override fun onChanged(unsplashes: List<Unsplash>) {
-        callback.unsplashesLoaded(unsplashes)
+    override fun onChanged(unsplash: Unsplash) {
+
     }
 
     override fun startListener() {

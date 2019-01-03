@@ -26,8 +26,8 @@ class UnsplashRepository(application: Application) {
     suspend fun loadAll() : List<Unsplash> = coroutineScope{unsplashDao.loadAllUnsplashes()}
 
     @UiThread
-    fun getLast(lifecycleOwner: LifecycleOwner, observer: Observer<List<Unsplash>>) {
-        val liveData : LiveData<List<Unsplash>> = unsplashDao.loadLast()
+    fun getLast(lifecycleOwner: LifecycleOwner, observer: Observer<Unsplash>) {
+        val liveData : LiveData<Unsplash> = unsplashDao.loadLast()
         if (liveData.hasActiveObservers()) return
         liveData.observe(lifecycleOwner, observer)
     }

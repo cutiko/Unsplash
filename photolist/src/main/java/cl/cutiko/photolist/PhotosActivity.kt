@@ -3,9 +3,7 @@ package cl.cutiko.photolist
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import cl.cutiko.data.models.Unsplash
-import cl.cutiko.data.repository.UnsplashRepository
 import kotlinx.android.synthetic.main.activity_photos.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -30,13 +28,17 @@ class PhotosActivity : AppCompatActivity(), PhotosContract.Callback {
     }
 
 
-    override suspend fun recylerRequest() {
+    override suspend fun recyclerRequest() {
         photosPresenter.getRandom()
     }
 
 
     override suspend fun initialRequest() {
-        photosPresenter.checkStatus()
+        photosPresenter.loadPrevious()
+    }
+
+    override fun unsplashLoaded(unsplash: Unsplash) {
+        Log.d("UNSPLASH_DB", "single: ${unsplash.id}")
     }
 
 
