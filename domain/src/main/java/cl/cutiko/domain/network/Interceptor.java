@@ -1,5 +1,6 @@
 package cl.cutiko.domain.network;
 
+import cl.cutiko.data.BuildConfig;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -37,7 +38,7 @@ class Interceptor {
                 Request originalRequest = chain.request();
 
                 Request request = originalRequest.newBuilder()
-                        .header("Authorization", "Client-ID 670dca916f140cd78e74829bd67751e011c9b5b94c17c8ce042d3bfd2bba2a2e")
+                        .header("Authorization", "Client-ID " + BuildConfig.UNSPLASH_KEY)
                         .build();
 
                 Response response = chain.proceed(request);

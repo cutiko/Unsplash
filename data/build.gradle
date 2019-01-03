@@ -6,6 +6,10 @@ ext {
     jetpack = '2.0.0'
 }
 
+def unsplashFile = rootProject.file("unsplash.properties")
+def unsplashProperties = new Properties()
+unsplashProperties.load(new FileInputStream(unsplashFile))
+
 android {
     compileSdkVersion general.compileSdkVersion
     defaultConfig {
@@ -14,6 +18,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        def rawAccessKey = String.valueOf(unsplashProperties['accessKey'])
+        buildConfigField "String", "UNSPLASH_KEY", "\"$rawAccessKey\""
     }
     buildTypes {
         release {
