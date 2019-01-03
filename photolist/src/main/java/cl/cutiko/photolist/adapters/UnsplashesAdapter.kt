@@ -1,14 +1,19 @@
 package cl.cutiko.photolist.adapters
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.RecyclerView
 import cl.cutiko.data.models.Unsplash
 import cl.cutiko.photolist.R
 import com.squareup.picasso.Picasso
+import com.squareup.picasso.Target
 
 class UnsplashesAdapter : RecyclerView.Adapter<UnsplashesAdapter.UnsplashHolder>() {
 
@@ -23,8 +28,28 @@ class UnsplashesAdapter : RecyclerView.Adapter<UnsplashesAdapter.UnsplashHolder>
 
     override fun onBindViewHolder(holder: UnsplashHolder, position: Int) {
         val unsplash = unsplashes[position]
+        val context = holder.itemView.context
         val url = unsplash.urls?.small
-        Picasso.get().load(url).centerCrop().fit().into(holder.imageView)
+        val imageView = holder.imageView
+
+        Picasso.get().load(url).into(object :Target {
+            override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+            }
+            override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
+            }
+
+            override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
+                imageView.setImageBitmap(bitmap)
+                if (bitmap != null) {
+                    val palette = Palette.from(bitmap).generate()
+                    val black = ContextCompat.getColor(context, android.R.color.black)
+                    val overlayColor = palette.getDarkMutedColor(black)
+                    holder.overlay.setBackgroundColor(overlayColor)
+                    val foregroundColor = palette.getDarkVibrantColor(black)
+                    holder.foreground.setBackgroundColor(foregroundColor)
+                }
+            }
+        })
         val user = unsplash.user
         val profile = user?.profile_image?.small
         Picasso.get().load(profile).centerCrop().fit().into(holder.profile)
