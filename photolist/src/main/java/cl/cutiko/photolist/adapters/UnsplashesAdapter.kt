@@ -47,7 +47,10 @@ class UnsplashesAdapter : RecyclerView.Adapter<UnsplashesAdapter.UnsplashHolder>
                     val overlayColor = palette.getDarkMutedColor(black)
                     holder.overlay.backgroundTintList = ColorStateList.valueOf(overlayColor)
                     val foregroundColor = palette.getDarkVibrantColor(black)
-                    holder.foreground.setBackgroundColor(foregroundColor)
+                    holder.foreground.backgroundTintList = ColorStateList.valueOf(foregroundColor)
+                    val white = ContextCompat.getColor(context, android.R.color.white)
+                    holder.name.setTextColor(palette.getLightMutedColor(white))
+                    holder.likes.setTextColor(palette.getLightVibrantColor(white))
                 }
             }
         })
