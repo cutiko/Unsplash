@@ -51,7 +51,7 @@ class UnsplashesAdapter : RecyclerView.Adapter<UnsplashesAdapter.UnsplashHolder>
             }
         })
         val user = unsplash.user
-        val profile = user?.profile_image?.small
+        val profile = user?.profile_image?.medium
         Picasso.get().load(profile).centerCrop().fit().into(holder.profile)
         holder.name.text = user?.name
         holder.likes.text = holder.itemView.context.getString(R.string.likes, user?.total_likes)
