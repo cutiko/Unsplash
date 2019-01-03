@@ -25,8 +25,11 @@ class UnsplashesAdapter : RecyclerView.Adapter<UnsplashesAdapter.UnsplashHolder>
         val unsplash = unsplashes[position]
         val url = unsplash.urls?.small
         Picasso.get().load(url).centerCrop().fit().into(holder.imageView)
-        val profile = unsplash.user?.profile_image?.small
+        val user = unsplash.user
+        val profile = user?.profile_image?.small
         Picasso.get().load(profile).centerCrop().fit().into(holder.profile)
+        holder.name.text = user?.name
+        holder.likes.text = holder.itemView.context.getString(R.string.likes, user?.total_likes)
     }
 
     override fun getItemCount(): Int = unsplashes.size

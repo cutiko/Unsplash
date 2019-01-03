@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PhotoList</string>
+    <string name="likes">%1$d likes</string>
 </resources>

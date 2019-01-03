@@ -36,7 +36,7 @@ class PhotosPresenter(
     }
 
     override suspend fun getRandom() {
-        getRandom.start()
+        //getRandom.start()
     }
 
     override fun onChanged(unsplashes: List<Unsplash>?) {
