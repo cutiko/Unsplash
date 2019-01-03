@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.annotation.UiThread
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Observer
 import cl.cutiko.data.daos.UnsplashDao
 import cl.cutiko.data.database.UnsplashRoomDatabase
