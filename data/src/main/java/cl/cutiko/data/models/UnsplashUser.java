@@ -1,8 +1,14 @@
 package cl.cutiko.data.models;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
+
 public class UnsplashUser {
+    @Embedded
     private UnsplashUserProfile_image profile_image;
-    private String name, bio, id, username;
+    private String name, bio, username;
+    @ColumnInfo(name = "user_id")
+    private String id;
     private int total_photos, total_likes, total_collections;
 
     public UnsplashUserProfile_image getProfile_image() {

@@ -1,7 +1,15 @@
 package cl.cutiko.data.models;
 
+import androidx.room.ColumnInfo;
+
 public class UnsplashUserProfile_image {
-    private String small, large, medium;
+
+    @ColumnInfo(name = "small_user")
+    private String small;
+    @ColumnInfo(name = "large_user")
+    private String large;
+    @ColumnInfo(name = "medium_user")
+    private String medium;
 
     public String getSmall() {
         return this.small;
