@@ -3,6 +3,7 @@ package cl.cutiko.photolist.adapters
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
@@ -72,6 +73,13 @@ class UnsplashesAdapter(context : Context) : RecyclerView.Adapter<UnsplashesAdap
             }
         }
         notifyDataSetChanged()
+    }
+    fun getItemColor(position : Int) : Int {
+        return if (position > -1 && position < unsplashes.size) {
+            Color.parseColor(unsplashes[position].color)
+        } else {
+            black
+        }
     }
 
     class UnsplashHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
