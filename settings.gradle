@@ -1,1 +1,1 @@
-include ':app', ':data', ':domain', ':photolist', ':viewlibrary'
+include ':app', ':data', ':domain', ':photolist', ':viewlibrary', ':splash'
