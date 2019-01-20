@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
 
+ext.navigation = '1.0.0-alpha09'
+
 android {
     compileSdkVersion general.compileSdkVersion
     defaultConfig {
@@ -25,4 +27,6 @@ dependencies {
     api 'androidx.core:core:1.0.1'
     api 'androidx.palette:palette:1.0.0'
     api 'com.squareup.picasso:picasso:2.71828'
+    api "android.arch.navigation:navigation-ui-ktx:$navigation"
+    api "android.arch.navigation:navigation-fragment-ktx:$navigation"
 }
