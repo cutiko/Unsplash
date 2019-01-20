@@ -8,7 +8,7 @@ import cl.cutiko.data.daos.UnsplashDao;
 import cl.cutiko.data.models.Unsplash;
 
 
-@Database(entities = {Unsplash.class}, version = 1)
+@Database(entities = {Unsplash.class}, version = 1, exportSchema = false)
 public abstract class UnsplashRoomDatabase extends RoomDatabase {
 
     private static volatile UnsplashRoomDatabase INSTANCE;
