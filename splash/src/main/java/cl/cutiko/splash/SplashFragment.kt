@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import cl.cutiko.viewlibrary.Directions
+import cl.cutiko.viewlibrary.toPhotos
 
 
 class SplashFragment : Fragment() {
@@ -19,7 +19,7 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.setOnClickListener {
-            view.findNavController().navigate(Directions().toPhotos())
+            view.findNavController().navigate(toPhotos())
         }
     }
 
