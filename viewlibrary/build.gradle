@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 ext.navigation = '1.0.0-alpha09'
 
@@ -29,4 +31,5 @@ dependencies {
     api 'com.squareup.picasso:picasso:2.71828'
     api "android.arch.navigation:navigation-ui-ktx:$navigation"
     api "android.arch.navigation:navigation-fragment-ktx:$navigation"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
