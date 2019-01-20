@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:startDestination="@id/splashFragment"
+    app:startDestination="@id/splash_nav"
     android:id="@+id/app_nav">
 
-
-    <fragment
-        android:id="@+id/splashFragment"
-        android:name="cl.cutiko.splash.SplashFragment"
-        android:label="SplashFragment" >
-        <action
-            android:id="@+id/to_photos"
-            app:destination="@id/photos_nav" />
-    </fragment>
+    <include app:graph="@navigation/splash_nav"/>
 
     <include app:graph="@navigation/photos_nav" />
 

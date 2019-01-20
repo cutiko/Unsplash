@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="photos_nav" type="id"/>
+    <item name="splash_nav" type="id"/>
+</resources>
