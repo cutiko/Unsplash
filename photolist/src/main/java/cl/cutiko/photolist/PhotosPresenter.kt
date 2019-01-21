@@ -28,7 +28,6 @@ class PhotosPresenter(
     override suspend fun initialLoad() {
         val unsplashes = coroutineScope { getPrevious.getFromDb() }
         onChanged(unsplashes)
-        getRandom()
         GlobalScope.launch {
             withContext(Dispatchers.Main) {
                 getLast.start()
