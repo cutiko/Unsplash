@@ -2,13 +2,14 @@ package cl.cutiko.domain.cases
 
 import android.app.Application
 import cl.cutiko.domain.network.GetUnsplashes
+import kotlinx.coroutines.coroutineScope
 
-class GetRandom(application: Application) : BaseUseCase {
+class GetRandom(application: Application)  {
 
     private val request : GetUnsplashes = GetUnsplashes(application)
 
-    override fun start() {
-        request.start()
+    suspend fun start() {
+        coroutineScope{request.start()}
     }
 
 }
