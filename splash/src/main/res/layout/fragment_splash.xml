@@ -19,15 +19,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:textSize="21sp"
-        android:text="PhotoDreamer"
-        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/konstant"
         android:gravity="center"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:text="@string/photo_dreamer"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="41sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.344" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
