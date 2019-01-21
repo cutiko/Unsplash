@@ -12,6 +12,7 @@
         <item name="windowNoTitle">true</item>
         <item name="android:navigationBarColor">@color/colorPrimary</item>
         <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/colorPrimaryDark</item>
     </style>
 
 </resources>
