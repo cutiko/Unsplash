@@ -5,7 +5,6 @@ import android.animation.ValueAnimator
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,8 +25,6 @@ class PhotosActivity : AppCompatActivity(), PhotosContract.Callback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_photos)
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         adapter = UnsplashesAdapter(this)
         val layoutManager = LinearLayoutManager(this)
         unsplashRv.layoutManager = layoutManager
