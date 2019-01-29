@@ -3,6 +3,7 @@ package cl.cutiko.splash
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,13 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
-class SplashFragment : Fragment(), SplashContract.Callback {
+class SplashFragment : Fragment(), SplashContract.Callback, Runnable {
+
+    companion object {
+        private const val THREE_SECONDS : Long = 3000
+    }
+
+    private val startTime = System.currentTimeMillis()
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -25,8 +32,17 @@ class SplashFragment : Fragment(), SplashContract.Callback {
     }
 
     override fun ready() {
-        findNavController().navigate(toPhotos())
+        val difference = System.currentTimeMillis() - startTime
+        if (difference >= THREE_SECONDS) {
+            moveForward()
+        } else {
+            Handler().postDelayed(this, THREE_SECONDS - difference)
+        }
     }
+
+    override fun run() = moveForward()
+
+    private fun moveForward() = findNavController().navigate(toPhotos())
 
 
 }
