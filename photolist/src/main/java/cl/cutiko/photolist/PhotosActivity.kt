@@ -1,5 +1,8 @@
 package cl.cutiko.photolist
 
+import android.animation.ArgbEvaluator
+import android.animation.ValueAnimator
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
@@ -44,10 +47,15 @@ class PhotosActivity : AppCompatActivity(), PhotosContract.Callback {
                     if (loadingPb.visibility == View.GONE) loadingPb.visibility = View.VISIBLE
                     GlobalScope.launch { presenter.getRandom() }
                 }
-                val color = adapter.getItemColor(lastPosition)
-                /*TODO
-                https@ //stackoverflow.com/questions/5200811/in-android-how-do-i-smoothly-fade-the-background-from-one-color-to-another-ho*/
-                photosCl.setBackgroundColor(color)
+                val colorTo = adapter.getItemColor(lastPosition)
+                val bg = photosCl.background as ColorDrawable
+                val colorFrom = bg.color
+                if (colorFrom == colorTo) return
+                val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo)
+                colorAnimation.duration = 400L
+                colorAnimation.addUpdateListener { animator -> photosCl.setBackgroundColor(animator.animatedValue as Int) }
+                colorAnimation.start()
+
             }
         })
     }
