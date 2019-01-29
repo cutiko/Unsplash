@@ -4,6 +4,7 @@ package cl.cutiko.splash
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +37,7 @@ class SplashFragment : Fragment(), SplashContract.Callback, Runnable {
         if (difference >= THREE_SECONDS) {
             moveForward()
         } else {
-            Handler().postDelayed(this, THREE_SECONDS - difference)
+            Handler(Looper.getMainLooper()).postDelayed(this, THREE_SECONDS - difference)
         }
     }
 
