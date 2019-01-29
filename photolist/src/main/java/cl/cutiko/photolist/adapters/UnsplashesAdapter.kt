@@ -15,6 +15,7 @@ import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.RecyclerView
 import cl.cutiko.data.models.Unsplash
 import cl.cutiko.photolist.R
+import cl.cutiko.viewlibrary.LoadingImageView
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 
@@ -34,7 +35,7 @@ class UnsplashesAdapter(context : Context) : RecyclerView.Adapter<UnsplashesAdap
     override fun onBindViewHolder(holder: UnsplashHolder, position: Int) {
         val unsplash = unsplashes[position]
         val url = unsplash.urls?.small
-        val imageView = holder.imageView
+        holder.loadingIv.setImage(url)
 
         Picasso.get().load(url).into(object :Target {
             override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
@@ -43,7 +44,6 @@ class UnsplashesAdapter(context : Context) : RecyclerView.Adapter<UnsplashesAdap
             }
 
             override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
-                imageView.setImageBitmap(bitmap)
                 if (bitmap != null) {
                     val palette = Palette.from(bitmap).generate()
                     val overlayColor = palette.getDarkMutedColor(black)
@@ -83,7 +83,7 @@ class UnsplashesAdapter(context : Context) : RecyclerView.Adapter<UnsplashesAdap
     }
 
     class UnsplashHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imageView: ImageView = itemView.findViewById(R.id.unsplashIv)
+        val loadingIv: LoadingImageView = itemView.findViewById(R.id.unsplashIv)
         val overlay : View = itemView.findViewById(R.id.overlayV)
         val foreground : View = itemView.findViewById(R.id.foregroundV)
         val name : TextView = itemView.findViewById(R.id.userNameTv)

@@ -8,7 +8,7 @@
     android:layout_marginTop="@dimen/unsplash_rv_margin"
     android:layout_marginBottom="@dimen/unsplash_rv_margin">
 
-    <ImageView
+    <cl.cutiko.viewlibrary.LoadingImageView
         android:id="@+id/unsplashIv"
         android:layout_width="0dp"
         android:layout_height="0dp"
