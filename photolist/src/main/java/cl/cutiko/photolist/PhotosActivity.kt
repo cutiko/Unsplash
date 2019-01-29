@@ -45,8 +45,6 @@ class PhotosActivity : AppCompatActivity(), PhotosContract.Callback {
                     GlobalScope.launch { presenter.getRandom() }
                 }
                 val color = adapter.getItemColor(lastPosition)
-                window.statusBarColor = color
-                window.navigationBarColor = color
                 /*TODO
                 https@ //stackoverflow.com/questions/5200811/in-android-how-do-i-smoothly-fade-the-background-from-one-color-to-another-ho*/
                 photosCl.setBackgroundColor(color)
