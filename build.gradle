@@ -5,6 +5,7 @@ buildscript {
                 'compileSdkVersion': 28,
                 'minSdkVersion': 21
         ]
+        picasso = '2.71828'
     }
     repositories {
         google()

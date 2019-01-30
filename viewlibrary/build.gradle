@@ -28,7 +28,7 @@ dependencies {
     api 'androidx.recyclerview:recyclerview:1.0.0'
     api 'androidx.core:core:1.0.1'
     api 'androidx.palette:palette:1.0.0'
-    api 'com.squareup.picasso:picasso:2.71828'
+    api "com.squareup.picasso:picasso:$picasso"
     api "android.arch.navigation:navigation-ui-ktx:$navigation"
     api "android.arch.navigation:navigation-fragment-ktx:$navigation"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
