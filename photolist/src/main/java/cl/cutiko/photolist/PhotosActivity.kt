@@ -51,7 +51,6 @@ class PhotosActivity : AppCompatActivity(), PhotosContract.Callback {
             colorAnimation.duration = 400L
             colorAnimation.addUpdateListener { animator -> photosCl.setBackgroundColor(animator.animatedValue as Int) }
             colorAnimation.start()
-
         }
     })
 
