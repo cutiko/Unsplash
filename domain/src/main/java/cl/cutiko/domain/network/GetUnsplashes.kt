@@ -2,7 +2,10 @@ package cl.cutiko.domain.network
 
 import android.app.Application
 import android.util.Log
+import androidx.core.content.ContextCompat
+import androidx.palette.graphics.Palette
 import cl.cutiko.data.models.Unsplash
+import cl.cutiko.data.models.UnsplashSwatch
 import cl.cutiko.data.repository.UnsplashRepository
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.*
@@ -12,6 +15,14 @@ import java.io.IOException
 class GetUnsplashes(application: Application) {
 
     private val repo: UnsplashRepository = UnsplashRepository(application)
+    private val black : Int
+    private val white : Int
+
+    init {
+        val context = application.applicationContext
+        black = ContextCompat.getColor(context, android.R.color.black)
+        white = ContextCompat.getColor(context, android.R.color.white)
+    }
 
     suspend fun start() {
         val requests = Interceptor.getInterceptor()
@@ -33,8 +44,22 @@ class GetUnsplashes(application: Application) {
 
     private fun getAsync(unsplash: Unsplash) = CoroutineScope(Dispatchers.IO).async {
         try {
-            Picasso.get().load(unsplash.urls?.small).get()
+            val photo = Picasso.get().load(unsplash.urls?.small).get()
             unsplash.bitmaped = true
+            val palette = Palette.from(photo).generate()
+            val muted = palette.getDarkMutedColor(black)
+            val vibrant = palette.getDarkVibrantColor(black)
+            val darkSwatch = palette.darkMutedSwatch
+
+            var body = black
+            var title = white
+            if (darkSwatch != null) {
+                body = darkSwatch.bodyTextColor
+                title = darkSwatch.titleTextColor
+            }
+            val photoSwatch = UnsplashSwatch(muted, vibrant, body , title)
+            unsplash.swatch = photoSwatch
+
         } catch (exception: IOException) {
             Log.d("CUTIKO_TAG", "GetUnsplashes.kt", exception)
         }
