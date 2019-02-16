@@ -15,5 +15,5 @@ data class Unsplash(
     var likes: Int = 0,
     var views: Int = 0,
     var bitmaped : Boolean = false,
-    @Embedded var swatch: Swatch?
+    @Embedded var swatch: UnsplashSwatch?
 )
