@@ -24,7 +24,6 @@ class UnsplashRepository(application: Application) {
     suspend fun insert(unsplashes : List<Unsplash>? ) = withContext(Dispatchers.IO) { unsplashDao.insertUnsplashes(unsplashes)}
 
 
-    @UiThread
     fun observeLast(lifecycleOwner: LifecycleOwner, observer: Observer<List<Unsplash>>) {
         val liveData : LiveData<List<Unsplash>> = unsplashDao.loadLast()
         if (liveData.hasActiveObservers()) return
