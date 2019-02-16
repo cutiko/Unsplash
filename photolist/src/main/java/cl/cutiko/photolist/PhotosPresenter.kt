@@ -18,6 +18,8 @@ class PhotosPresenter(
     private val getRandom : GetRandom
     private val getPrevious : GetPrevious
     private var randomCalled = false
+    private val randomJob = SupervisorJob()
+    private val uiScope = CoroutineScope(Dispatchers.Main + randomJob)
 
     init {
         getLast = GetLast(lifecycleOwner, this, application)
@@ -35,16 +37,20 @@ class PhotosPresenter(
         }
     }
 
-    override suspend fun getRandom() {
+    override fun getRandom() {
         if (!randomCalled) {
             randomCalled = true
-            getRandom.start()
+            uiScope.launch { getRandom.start() }
         }
     }
 
     override fun onChanged(unsplashes: List<Unsplash>?) {
         randomCalled = false
         callback.unsplashesLoaded(unsplashes)
+    }
+
+    override fun onCancel() {
+        uiScope.coroutineContext.cancelChildren()
     }
 
 }

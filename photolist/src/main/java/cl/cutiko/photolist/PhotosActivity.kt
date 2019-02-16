@@ -64,4 +64,8 @@ class PhotosActivity : AppCompatActivity(), PhotosContract.Callback {
         }
     }
 
+    override fun onStop() {
+        presenter.onCancel()
+        super.onStop()
+    }
 }
