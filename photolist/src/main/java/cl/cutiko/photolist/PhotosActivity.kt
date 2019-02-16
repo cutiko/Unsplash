@@ -11,10 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import cl.cutiko.data.models.Unsplash
 import cl.cutiko.photolist.adapters.UnsplashesAdapter
 import kotlinx.android.synthetic.main.activity_photos.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class PhotosActivity : AppCompatActivity(), PhotosContract.Callback {
@@ -32,8 +28,7 @@ class PhotosActivity : AppCompatActivity(), PhotosContract.Callback {
         unsplashRv.adapter = adapter
         setScrollListener()
         presenter = PhotosPresenter(application, this, this)
-        GlobalScope.launch { presenter.initialLoad() }
-
+        presenter.initialLoad()
     }
 
     private fun setScrollListener() = unsplashRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -55,12 +50,8 @@ class PhotosActivity : AppCompatActivity(), PhotosContract.Callback {
     })
 
     override fun unsplashesLoaded(unsplashes: List<Unsplash>?) {
-        GlobalScope.launch {
-            withContext(Dispatchers.Main) {
-                loadingPb.visibility = View.GONE
-                adapter.update(unsplashes)
-            }
-        }
+        loadingPb.visibility = View.GONE
+        adapter.update(unsplashes)
     }
 
     override fun onStop() {

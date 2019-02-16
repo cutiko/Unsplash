@@ -10,7 +10,7 @@ interface PhotosContract {
 
     interface Presenter {
         fun getRandom()
-        suspend fun initialLoad()
+        fun initialLoad()
         fun onCancel()
     }
 

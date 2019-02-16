@@ -18,8 +18,7 @@ class PhotosPresenter(
     private val getRandom : GetRandom
     private val getPrevious : GetPrevious
     private var randomCalled = false
-    private val randomJob = SupervisorJob()
-    private val uiScope = CoroutineScope(Dispatchers.Main + randomJob)
+    private val uiScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     init {
         getLast = GetLast(lifecycleOwner, this, application)
@@ -27,14 +26,12 @@ class PhotosPresenter(
         getPrevious = GetPrevious(application)
     }
 
-    override suspend fun initialLoad() {
-        val unsplashes = coroutineScope { getPrevious.getFromDb() }
-        onChanged(unsplashes)
-        GlobalScope.launch {
-            withContext(Dispatchers.Main) {
-                getLast.start()
-            }
+    override fun initialLoad() {
+        uiScope.launch {
+            val unsplashes = getPrevious.getFromDb()
+            onChanged(unsplashes)
         }
+        getLast.start()
     }
 
     override fun getRandom() {
