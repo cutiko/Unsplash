@@ -7,7 +7,8 @@ interface SplashContract {
     }
 
     interface Presenter {
-        suspend fun startRequest()
+        fun startRequest()
+        fun onCancel()
     }
 
 }

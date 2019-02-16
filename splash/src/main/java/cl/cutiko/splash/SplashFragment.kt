@@ -11,8 +11,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import cl.cutiko.viewlibrary.toPhotos
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 
 class SplashFragment : Fragment(), SplashContract.Callback, Runnable {
@@ -22,10 +20,12 @@ class SplashFragment : Fragment(), SplashContract.Callback, Runnable {
     }
 
     private val startTime = System.currentTimeMillis()
+    private lateinit var presenter: SplashPresenter
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        GlobalScope.launch { SplashPresenter(activity!!.application, this@SplashFragment).startRequest() }
+        presenter = SplashPresenter(activity!!.application, this@SplashFragment)
+        presenter.startRequest()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -45,5 +45,8 @@ class SplashFragment : Fragment(), SplashContract.Callback, Runnable {
 
     private fun moveForward() = findNavController().navigate(toPhotos())
 
-
+    override fun onStop() {
+        presenter.onCancel()
+        super.onStop()
+    }
 }
