@@ -34,7 +34,7 @@ class GetUnsplashes(application: Application) {
     private fun getAsync(unsplash: Unsplash) = CoroutineScope(Dispatchers.IO).async {
         try {
             Picasso.get().load(unsplash.urls?.small).get()
-            unsplash.bitmaped = 1
+            unsplash.bitmaped = true
             Log.d("CUTIKO_TAG", "GetUnsplashes.kt bitmapped id: ${unsplash.id}" )
         } catch (exception: IOException) {
             Log.d("CUTIKO_TAG", "GetUnsplashes.kt", exception)

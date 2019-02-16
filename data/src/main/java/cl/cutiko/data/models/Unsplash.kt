@@ -13,5 +13,6 @@ data class Unsplash(
     var description: String?,
     var downloads: Int = 0,
     var likes: Int = 0,
-    var views: Int = 0
+    var views: Int = 0,
+    var bitmaped : Boolean = false
 )
