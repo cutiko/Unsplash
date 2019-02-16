@@ -25,7 +25,7 @@ class UnsplashRepository(application: Application) {
 
 
     @UiThread
-    fun getLast(lifecycleOwner: LifecycleOwner, observer: Observer<List<Unsplash>>) {
+    fun observeLast(lifecycleOwner: LifecycleOwner, observer: Observer<List<Unsplash>>) {
         val liveData : LiveData<List<Unsplash>> = unsplashDao.loadLast()
         if (liveData.hasActiveObservers()) return
         liveData.observe(lifecycleOwner, observer)

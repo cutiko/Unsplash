@@ -15,7 +15,7 @@ class GetLast(
     private val repo: UnsplashRepository = UnsplashRepository(application)
 
     override fun start() {
-        repo.getLast(lifecycleOwner, observer)
+        repo.observeLast(lifecycleOwner, observer)
     }
 
 }
