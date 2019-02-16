@@ -7,9 +7,10 @@ import cl.cutiko.data.repository.UnsplashRepository
 import com.shopify.promises.Promise
 import com.shopify.promises.all
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Response
 import java.io.IOException
 
@@ -20,7 +21,7 @@ class GetUnsplashes(application: Application) {
     suspend fun start() {
         val requests = Interceptor.getInterceptor()
         val call = requests.getRandom()
-        coroutineScope{
+        withContext(Dispatchers.IO){
             val response : Response<List<Unsplash>> = call.execute()
             if (response.isSuccessful && response.code() == 200 && response.body() != null) {
                 val promises = mutableListOf<Promise<Unsplash, Int>>()
