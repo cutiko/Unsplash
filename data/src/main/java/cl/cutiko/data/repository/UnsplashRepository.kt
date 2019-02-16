@@ -8,7 +8,6 @@ import cl.cutiko.data.daos.UnsplashDao
 import cl.cutiko.data.database.UnsplashRoomDatabase
 import cl.cutiko.data.models.Unsplash
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 
 class UnsplashRepository(application: Application) {
@@ -29,7 +28,7 @@ class UnsplashRepository(application: Application) {
         liveData.observe(lifecycleOwner, observer)
     }
 
-    suspend fun loadAll() : List<Unsplash> = coroutineScope{unsplashDao.loadAll()}
+    suspend fun loadAll() : List<Unsplash> = withContext(Dispatchers.IO){unsplashDao.loadAll()}
 
 
 }
