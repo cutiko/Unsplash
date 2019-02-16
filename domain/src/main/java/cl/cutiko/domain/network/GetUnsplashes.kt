@@ -35,7 +35,6 @@ class GetUnsplashes(application: Application) {
         try {
             Picasso.get().load(unsplash.urls?.small).get()
             unsplash.bitmaped = true
-            Log.d("CUTIKO_TAG", "GetUnsplashes.kt bitmapped id: ${unsplash.id}" )
         } catch (exception: IOException) {
             Log.d("CUTIKO_TAG", "GetUnsplashes.kt", exception)
         }
