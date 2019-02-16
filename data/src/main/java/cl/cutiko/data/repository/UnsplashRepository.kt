@@ -1,7 +1,6 @@
 package cl.cutiko.data.repository
 
 import android.app.Application
-import androidx.annotation.UiThread
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -30,7 +29,6 @@ class UnsplashRepository(application: Application) {
         liveData.observe(lifecycleOwner, observer)
     }
 
-    @UiThread
     suspend fun loadAll() : List<Unsplash> = coroutineScope{unsplashDao.loadAll()}
 
 
