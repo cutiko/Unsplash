@@ -4,63 +4,40 @@ import android.app.Application
 import android.util.Log
 import cl.cutiko.data.models.Unsplash
 import cl.cutiko.data.repository.UnsplashRepository
-import com.shopify.promises.Promise
-import com.shopify.promises.all
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import retrofit2.Response
 import java.io.IOException
 
 class GetUnsplashes(application: Application) {
 
-    private val repo : UnsplashRepository= UnsplashRepository(application)
+    private val repo: UnsplashRepository = UnsplashRepository(application)
 
     suspend fun start() {
         val requests = Interceptor.getInterceptor()
         val call = requests.getRandom()
-        withContext(Dispatchers.IO){
-            val response : Response<List<Unsplash>> = call.execute()
-            if (response.isSuccessful && response.code() == 200 && response.body() != null) {
-                val promises = mutableListOf<Promise<Unsplash, Int>>()
-                response.body()?.forEachIndexed { index, unsplash ->
-                    promises.add(getPromise(unsplash, index))
-                }
-                Promise.all(promises).whenComplete {result: Promise.Result<Array<Unsplash>, Int> ->
-                    when (result) {
-                        is Promise.Result.Success<Array<Unsplash>, Int> -> {
-                            Log.d("CUTIKO_TAG", "GetUnsplashes.kt it is working")
-                            GlobalScope.launch { repo.insert(result.value.asList()) }
-                        }
-                        is Promise.Result.Error<Array<Unsplash>, Int> -> {
-                            Log.d("CUTIKO_TAG", "GetUnsplashes.kt ${result.error} FAILED EVERYTHING")
-                        }
-
-                    }
-                }
+        withContext(Dispatchers.IO) {
+            try {
+                val response: Response<List<Unsplash>> = call.execute()
+                val unsplashes = response.body()
+                if (!response.isSuccessful || response.code() != 200 || unsplashes == null) return@withContext
+                val deferred = unsplashes.map {getAsync(it)}
+                deferred.awaitAll()
+                repo.insert(unsplashes)
+            } catch (exception: IOException) {
+                Log.d("CUTIKO_TAG", "GetUnsplashes.kt", exception)
             }
         }
+
     }
 
-    private fun getPromise(unsplash : Unsplash, index : Int) : Promise<Unsplash, Int> = Promise {
-        val requestCreator = Picasso.get().load(unsplash.urls?.small)
-        requestCreator.tag(unsplash.id)
-        onCancel {
-            Picasso.get().cancelTag(unsplash.id)
-        }
+    private fun getAsync(unsplash: Unsplash) = CoroutineScope(Dispatchers.IO).async {
         try {
-            val bitmap = requestCreator.get()
+            Picasso.get().load(unsplash.urls?.small).get()
             unsplash.bitmaped = 1
-            resolve(unsplash)
-            Log.d("CUTIKO_TAG", "GetUnsplashes.kt bitmap obtained for ${unsplash.id}")
-            Log.d("CUTIKO_TAG", "${bitmap.byteCount}")
-        } catch (e: IOException) {
-            Log.d("CUTIKO_TAG", "GetUnsplashes.kt FAIL for ${unsplash.id}")
-            reject(index)
-            return@Promise
+            Log.d("CUTIKO_TAG", "GetUnsplashes.kt bitmapped id: ${unsplash.id}" )
+        } catch (exception: IOException) {
+            Log.d("CUTIKO_TAG", "GetUnsplashes.kt", exception)
         }
     }
-
 }
