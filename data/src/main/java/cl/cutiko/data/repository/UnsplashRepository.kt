@@ -8,7 +8,9 @@ import androidx.lifecycle.Observer
 import cl.cutiko.data.daos.UnsplashDao
 import cl.cutiko.data.database.UnsplashRoomDatabase
 import cl.cutiko.data.models.Unsplash
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 
 class UnsplashRepository(application: Application) {
 
@@ -19,7 +21,7 @@ class UnsplashRepository(application: Application) {
         unsplashDao = db.unsplashDao
     }
 
-    suspend fun insert(unsplashes : List<Unsplash>? ) = coroutineScope{ unsplashDao.insertUnsplashes(unsplashes) }
+    suspend fun insert(unsplashes : List<Unsplash>? ) = withContext(Dispatchers.IO) { unsplashDao.insertUnsplashes(unsplashes)}
 
 
     @UiThread
