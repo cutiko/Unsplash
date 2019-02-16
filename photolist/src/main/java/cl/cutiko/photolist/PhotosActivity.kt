@@ -41,7 +41,7 @@ class PhotosActivity : AppCompatActivity(), PhotosContract.Callback {
             val lastPosition = (recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
             if (adapter.itemCount - lastPosition <= 2) {
                 if (loadingPb.visibility == View.GONE) loadingPb.visibility = View.VISIBLE
-                GlobalScope.launch { presenter.getRandom() }
+                presenter.getRandom()
             }
             val colorTo = adapter.getItemColor(lastPosition)
             val bg = photosCl.background as ColorDrawable
