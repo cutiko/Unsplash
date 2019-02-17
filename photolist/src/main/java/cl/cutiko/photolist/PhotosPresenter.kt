@@ -27,11 +27,11 @@ class PhotosPresenter(
     }
 
     override fun initialLoad() {
+        getLast.start()
         uiScope.launch {
             val unsplashes = getPrevious.getFromDb()
             onChanged(unsplashes)
         }
-        getLast.start()
     }
 
     override fun getRandom() {

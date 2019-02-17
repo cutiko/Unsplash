@@ -23,7 +23,7 @@ class UnsplashRepository(application: Application) {
 
 
     fun observeLast(lifecycleOwner: LifecycleOwner, observer: Observer<List<Unsplash>>) {
-        val liveData : LiveData<List<Unsplash>> = unsplashDao.loadLast()
+        val liveData : LiveData<List<Unsplash>> = unsplashDao.loadLast(System.currentTimeMillis())
         if (liveData.hasActiveObservers()) return
         liveData.observe(lifecycleOwner, observer)
     }
