@@ -59,7 +59,7 @@ class GetUnsplashes(application: Application) {
             }
             val photoSwatch = UnsplashSwatch(muted, vibrant, body , title)
             unsplash.swatch = photoSwatch
-
+            unsplash.downloaded_at = System.currentTimeMillis()
         } catch (exception: IOException) {
             Log.d("CUTIKO_TAG", "GetUnsplashes.kt", exception)
         }
