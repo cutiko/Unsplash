@@ -34,7 +34,8 @@ class GetUnsplashes(application: Application) {
                 if (!response.isSuccessful || response.code() != 200 || unsplashes == null) return@withContext
                 val deferred = unsplashes.map {getAsync(it)}
                 deferred.awaitAll()
-                repo.insert(unsplashes)
+                val filtered = unsplashes.filter { it.bitmaped }
+                repo.insert(filtered)
             } catch (exception: IOException) {
                 Log.d("CUTIKO_TAG", "GetUnsplashes.kt", exception)
             }

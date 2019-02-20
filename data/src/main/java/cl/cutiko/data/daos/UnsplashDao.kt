@@ -12,9 +12,9 @@ interface UnsplashDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertUnsplashes(unsplashes : List<Unsplash>?)
 
-    @Query("SELECT * FROM unsplashes WHERE bitmaped = 1 AND downloaded_at > :downloadedAt ORDER BY downloaded_at LIMIT 10")
+    @Query("SELECT * FROM unsplashes WHERE downloaded_at > :downloadedAt ORDER BY downloaded_at LIMIT 10")
     fun loadLast(downloadedAt : Long) : LiveData<List<Unsplash>>
 
-    @Query("SELECT * FROM unsplashes WHERE bitmaped = 1 ORDER BY downloaded_at")
+    @Query("SELECT * FROM unsplashes ORDER BY downloaded_at")
     fun loadAll() : List<Unsplash>
 }
